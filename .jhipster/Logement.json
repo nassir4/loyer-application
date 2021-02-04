@@ -1,0 +1,69 @@
+{
+  "name": "Logement",
+  "fields": [
+    {
+      "fieldName": "nbreChambe",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sufarce",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "photo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "loyer",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "etage",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "ascenceur",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "garage",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "piscine",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "grenier",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "adresse",
+      "otherEntityRelationshipName": "logement",
+      "relationshipName": "adresse",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210204155828",
+  "entityTableName": "logement",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

@@ -1,0 +1,11 @@
+id;nbre_chambe;sufarce;photo;photo_content_type;loyer;description;etage;ascenceur;garage;piscine;grenier
+1;6013;96789;../fake-data/blob/hipster.png;image/png;64081;infrastructures;58399;false;false;true;false
+2;57167;20980;../fake-data/blob/hipster.png;image/png;72150;Agent;39670;false;false;true;true
+3;30421;27845;../fake-data/blob/hipster.png;image/png;890;Adaptive navigating;87877;false;true;false;false
+4;40566;24248;../fake-data/blob/hipster.png;image/png;57754;Plaza vertical Forward;25146;false;false;false;true
+5;49556;86751;../fake-data/blob/hipster.png;image/png;50686;Factors Directives firmware;30291;false;false;false;true
+6;15077;44767;../fake-data/blob/hipster.png;image/png;43171;Home Loan Account eyeballs;62025;true;true;true;false
+7;99552;9863;../fake-data/blob/hipster.png;image/png;35300;pixel Car;59196;true;false;false;false
+8;65890;68548;../fake-data/blob/hipster.png;image/png;99428;e-business e-markets forecast;47292;true;false;false;true
+9;39932;21827;../fake-data/blob/hipster.png;image/png;87709;invoice;2226;false;false;true;false
+10;45150;76955;../fake-data/blob/hipster.png;image/png;31376;Table;90246;true;true;true;false

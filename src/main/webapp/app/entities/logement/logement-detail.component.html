@@ -1,0 +1,77 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="logement">
+            <h2><span jhiTranslate="loyerApp.logement.detail.title">Logement</span> {{ logement.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="loyerApp.logement.nbreChambe">Nbre Chambe</span></dt>
+                <dd>
+                    <span>{{ logement.nbreChambe }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.sufarce">Sufarce</span></dt>
+                <dd>
+                    <span>{{ logement.sufarce }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.photo">Photo</span></dt>
+                <dd>
+                    <div *ngIf="logement.photo">
+                        <a (click)="openFile(logement.photoContentType, logement.photo)">
+                            <img [src]="'data:' + logement.photoContentType + ';base64,' + logement.photo" style="max-width: 100%;" alt="logement image"/>
+                        </a>
+                        {{ logement.photoContentType }}, {{ byteSize(logement.photo) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.loyer">Loyer</span></dt>
+                <dd>
+                    <span>{{ logement.loyer }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.description">Description</span></dt>
+                <dd>
+                    <span>{{ logement.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.etage">Etage</span></dt>
+                <dd>
+                    <span>{{ logement.etage }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.ascenceur">Ascenceur</span></dt>
+                <dd>
+                    <span>{{ logement.ascenceur }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.garage">Garage</span></dt>
+                <dd>
+                    <span>{{ logement.garage }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.piscine">Piscine</span></dt>
+                <dd>
+                    <span>{{ logement.piscine }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.grenier">Grenier</span></dt>
+                <dd>
+                    <span>{{ logement.grenier }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.logement.adresse">Adresse</span></dt>
+                <dd>
+                    <div *ngIf="logement.adresseId">
+                        <a [routerLink]="['/adresse', logement.adresseId, 'view']">{{ logement.adresseId }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/logement', logement.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

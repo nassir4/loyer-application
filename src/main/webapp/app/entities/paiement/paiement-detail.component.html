@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="paiement">
+            <h2><span jhiTranslate="loyerApp.paiement.detail.title">Paiement</span> {{ paiement.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="loyerApp.paiement.loyer">Loyer</span></dt>
+                <dd>
+                    <span>{{ paiement.loyer }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.paiement.dateDebut">Date Debut</span></dt>
+                <dd>
+                    <span>{{ paiement.dateDebut }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.paiement.duree">Duree</span></dt>
+                <dd>
+                    <span>{{ paiement.duree }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.paiement.typePaiement">Type Paiement</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'loyerApp.Type.' + paiement.typePaiement }}">{{ paiement.typePaiement }}</span>
+                </dd>
+                <dt><span jhiTranslate="loyerApp.paiement.user">User</span></dt>
+                <dd>
+                    {{ paiement.userId }}
+                </dd>
+                <dt><span jhiTranslate="loyerApp.paiement.logement">Logement</span></dt>
+                <dd>
+                    <div *ngIf="paiement.logementId">
+                        <a [routerLink]="['/logement', paiement.logementId, 'view']">{{ paiement.logementId }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/paiement', paiement.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

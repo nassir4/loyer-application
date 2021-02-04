@@ -1,0 +1,10 @@
+{
+  "loyerApp": {
+    "Type": {
+      "null": "",
+      "Orange_money": "Orange_money",
+      "Free_money": "Free_money",
+      "Wave": "Wave"
+    }
+  }
+}

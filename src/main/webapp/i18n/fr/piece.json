@@ -1,0 +1,10 @@
+{
+  "loyerApp": {
+    "Piece": {
+      "null": "",
+      "Maison": "Maison",
+      "Appartement": "Appartement",
+      "Chambre": "Chambre"
+    }
+  }
+}

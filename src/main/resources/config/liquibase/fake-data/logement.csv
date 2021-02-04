@@ -1,0 +1,11 @@
+id;type_de_piece;nbre_chambe;sufarce;photo;photo_content_type;loyer;description;etage;ascenceur;garage;piscine;grenier;created_at
+1;Maison;42134;11748;../fake-data/blob/hipster.png;image/png;58399;customized;27619;true;false;true;false;2021-02-03
+2;Maison;890;42498;../fake-data/blob/hipster.png;image/png;25404;navigating;87877;false;true;false;false;2021-02-04
+3;Appartement;62861;36218;../fake-data/blob/hipster.png;image/png;3838;compress Plastic Synergized;49556;true;true;true;true;2021-02-03
+4;Appartement;92127;15077;../fake-data/blob/hipster.png;image/png;44767;Borders Investment Account;22086;true;true;true;true;2021-02-04
+5;Maison;59196;52608;../fake-data/blob/hipster.png;image/png;49212;multi-state;68548;true;true;false;true;2021-02-04
+6;Appartement;2455;63686;../fake-data/blob/hipster.png;image/png;39932;AGP;64787;true;false;false;false;2021-02-03
+7;Maison;45606;90246;../fake-data/blob/hipster.png;image/png;70305;back up Grocery Health;21216;true;false;true;true;2021-02-04
+8;Chambre;81069;16509;../fake-data/blob/hipster.png;image/png;52775;communities circuit;25743;false;false;true;false;2021-02-03
+9;Appartement;1792;56467;../fake-data/blob/hipster.png;image/png;68239;Liberia Refined Forward;12732;false;true;true;false;2021-02-04
+10;Chambre;32807;71676;../fake-data/blob/hipster.png;image/png;98862;Borders;98885;false;false;true;false;2021-02-04

@@ -1,0 +1,53 @@
+{
+  "name": "Paiement",
+  "fields": [
+    {
+      "fieldName": "loyer",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "duree",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "typePaiement",
+      "fieldType": "Type",
+      "fieldValues": "Orange_money,Free_money,Wave"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "paiement",
+      "relationshipName": "user",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "logement",
+      "otherEntityRelationshipName": "paiement",
+      "relationshipName": "logement",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210204161630",
+  "javadoc": "not an ignored comment",
+  "entityTableName": "paiement",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

@@ -40,7 +40,6 @@ export const logementRoute: Routes = [
     component: LogementComponent,
     data: {
       authorities: [Authority.USER],
-      defaultSort: 'id,asc',
       pageTitle: 'loyerApp.logement.home.title',
     },
     canActivate: [UserRouteAccessService],

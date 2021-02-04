@@ -1,16 +1,12 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { ILogement, Logement } from 'app/shared/model/logement.model';
 import { LogementService } from './logement.service';
-import { AlertError } from 'app/shared/alert/alert-error.model';
-import { IAdresse } from 'app/shared/model/adresse.model';
-import { AdresseService } from 'app/entities/adresse/adresse.service';
 
 @Component({
   selector: 'jhi-logement-update',
@@ -18,89 +14,25 @@ import { AdresseService } from 'app/entities/adresse/adresse.service';
 })
 export class LogementUpdateComponent implements OnInit {
   isSaving = false;
-  adresses: IAdresse[] = [];
-  createdAtDp: any;
 
   editForm = this.fb.group({
     id: [],
-    typeDePiece: [null, [Validators.required]],
-    nbreChambe: [null, [Validators.required]],
-    sufarce: [],
-    photo: [],
-    photoContentType: [],
-    loyer: [null, [Validators.required]],
-    description: [null, [Validators.required]],
-    etage: [],
-    ascenceur: [],
-    garage: [],
-    piscine: [],
-    grenier: [],
-    createdAt: [],
-    adresseId: [],
+    etat: [],
   });
 
-  constructor(
-    protected dataUtils: JhiDataUtils,
-    protected eventManager: JhiEventManager,
-    protected logementService: LogementService,
-    protected adresseService: AdresseService,
-    protected elementRef: ElementRef,
-    protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
-  ) {}
+  constructor(protected logementService: LogementService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ logement }) => {
       this.updateForm(logement);
-
-      this.adresseService.query().subscribe((res: HttpResponse<IAdresse[]>) => (this.adresses = res.body || []));
     });
   }
 
   updateForm(logement: ILogement): void {
     this.editForm.patchValue({
       id: logement.id,
-      typeDePiece: logement.typeDePiece,
-      nbreChambe: logement.nbreChambe,
-      sufarce: logement.sufarce,
-      photo: logement.photo,
-      photoContentType: logement.photoContentType,
-      loyer: logement.loyer,
-      description: logement.description,
-      etage: logement.etage,
-      ascenceur: logement.ascenceur,
-      garage: logement.garage,
-      piscine: logement.piscine,
-      grenier: logement.grenier,
-      createdAt: logement.createdAt,
-      adresseId: logement.adresseId,
+      etat: logement.etat,
     });
-  }
-
-  byteSize(base64String: string): string {
-    return this.dataUtils.byteSize(base64String);
-  }
-
-  openFile(contentType: string, base64String: string): void {
-    this.dataUtils.openFile(contentType, base64String);
-  }
-
-  setFileData(event: any, field: string, isImage: boolean): void {
-    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe(null, (err: JhiFileLoadError) => {
-      this.eventManager.broadcast(
-        new JhiEventWithContent<AlertError>('loyerApp.error', { ...err, key: 'error.file.' + err.key })
-      );
-    });
-  }
-
-  clearInputImage(field: string, fieldContentType: string, idInput: string): void {
-    this.editForm.patchValue({
-      [field]: null,
-      [fieldContentType]: null,
-    });
-    if (this.elementRef && idInput && this.elementRef.nativeElement.querySelector('#' + idInput)) {
-      this.elementRef.nativeElement.querySelector('#' + idInput).value = null;
-    }
   }
 
   previousState(): void {
@@ -121,20 +53,7 @@ export class LogementUpdateComponent implements OnInit {
     return {
       ...new Logement(),
       id: this.editForm.get(['id'])!.value,
-      typeDePiece: this.editForm.get(['typeDePiece'])!.value,
-      nbreChambe: this.editForm.get(['nbreChambe'])!.value,
-      sufarce: this.editForm.get(['sufarce'])!.value,
-      photoContentType: this.editForm.get(['photoContentType'])!.value,
-      photo: this.editForm.get(['photo'])!.value,
-      loyer: this.editForm.get(['loyer'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      etage: this.editForm.get(['etage'])!.value,
-      ascenceur: this.editForm.get(['ascenceur'])!.value,
-      garage: this.editForm.get(['garage'])!.value,
-      piscine: this.editForm.get(['piscine'])!.value,
-      grenier: this.editForm.get(['grenier'])!.value,
-      createdAt: this.editForm.get(['createdAt'])!.value,
-      adresseId: this.editForm.get(['adresseId'])!.value,
+      etat: this.editForm.get(['etat'])!.value,
     };
   }
 
@@ -152,9 +71,5 @@ export class LogementUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
-  }
-
-  trackById(index: number, item: IAdresse): any {
-    return item.id;
   }
 }

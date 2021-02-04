@@ -3,9 +3,6 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.LoyerApp;
 import com.mycompany.myapp.domain.Logement;
 import com.mycompany.myapp.repository.LogementRepository;
-import com.mycompany.myapp.service.LogementService;
-import com.mycompany.myapp.service.dto.LogementDTO;
-import com.mycompany.myapp.service.mapper.LogementMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,10 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +21,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.mycompany.myapp.domain.enumeration.Piece;
 /**
  * Integration tests for the {@link LogementResource} REST controller.
  */
@@ -36,52 +29,11 @@ import com.mycompany.myapp.domain.enumeration.Piece;
 @WithMockUser
 public class LogementResourceIT {
 
-    private static final Piece DEFAULT_TYPE_DE_PIECE = Piece.Maison;
-    private static final Piece UPDATED_TYPE_DE_PIECE = Piece.Appartement;
-
-    private static final Integer DEFAULT_NBRE_CHAMBE = 1;
-    private static final Integer UPDATED_NBRE_CHAMBE = 2;
-
-    private static final Float DEFAULT_SUFARCE = 1F;
-    private static final Float UPDATED_SUFARCE = 2F;
-
-    private static final byte[] DEFAULT_PHOTO = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_PHOTO = TestUtil.createByteArray(1, "1");
-    private static final String DEFAULT_PHOTO_CONTENT_TYPE = "image/jpg";
-    private static final String UPDATED_PHOTO_CONTENT_TYPE = "image/png";
-
-    private static final Integer DEFAULT_LOYER = 1;
-    private static final Integer UPDATED_LOYER = 2;
-
-    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
-
-    private static final Integer DEFAULT_ETAGE = 1;
-    private static final Integer UPDATED_ETAGE = 2;
-
-    private static final Boolean DEFAULT_ASCENCEUR = false;
-    private static final Boolean UPDATED_ASCENCEUR = true;
-
-    private static final Boolean DEFAULT_GARAGE = false;
-    private static final Boolean UPDATED_GARAGE = true;
-
-    private static final Boolean DEFAULT_PISCINE = false;
-    private static final Boolean UPDATED_PISCINE = true;
-
-    private static final Boolean DEFAULT_GRENIER = false;
-    private static final Boolean UPDATED_GRENIER = true;
-
-    private static final LocalDate DEFAULT_CREATED_AT = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATED_AT = LocalDate.now(ZoneId.systemDefault());
+    private static final Boolean DEFAULT_ETAT = false;
+    private static final Boolean UPDATED_ETAT = true;
 
     @Autowired
     private LogementRepository logementRepository;
-
-    @Autowired
-    private LogementMapper logementMapper;
-
-    @Autowired
-    private LogementService logementService;
 
     @Autowired
     private EntityManager em;
@@ -99,19 +51,7 @@ public class LogementResourceIT {
      */
     public static Logement createEntity(EntityManager em) {
         Logement logement = new Logement()
-            .typeDePiece(DEFAULT_TYPE_DE_PIECE)
-            .nbreChambe(DEFAULT_NBRE_CHAMBE)
-            .sufarce(DEFAULT_SUFARCE)
-            .photo(DEFAULT_PHOTO)
-            .photoContentType(DEFAULT_PHOTO_CONTENT_TYPE)
-            .loyer(DEFAULT_LOYER)
-            .description(DEFAULT_DESCRIPTION)
-            .etage(DEFAULT_ETAGE)
-            .ascenceur(DEFAULT_ASCENCEUR)
-            .garage(DEFAULT_GARAGE)
-            .piscine(DEFAULT_PISCINE)
-            .grenier(DEFAULT_GRENIER)
-            .createdAt(DEFAULT_CREATED_AT);
+            .etat(DEFAULT_ETAT);
         return logement;
     }
     /**
@@ -122,19 +62,7 @@ public class LogementResourceIT {
      */
     public static Logement createUpdatedEntity(EntityManager em) {
         Logement logement = new Logement()
-            .typeDePiece(UPDATED_TYPE_DE_PIECE)
-            .nbreChambe(UPDATED_NBRE_CHAMBE)
-            .sufarce(UPDATED_SUFARCE)
-            .photo(UPDATED_PHOTO)
-            .photoContentType(UPDATED_PHOTO_CONTENT_TYPE)
-            .loyer(UPDATED_LOYER)
-            .description(UPDATED_DESCRIPTION)
-            .etage(UPDATED_ETAGE)
-            .ascenceur(UPDATED_ASCENCEUR)
-            .garage(UPDATED_GARAGE)
-            .piscine(UPDATED_PISCINE)
-            .grenier(UPDATED_GRENIER)
-            .createdAt(UPDATED_CREATED_AT);
+            .etat(UPDATED_ETAT);
         return logement;
     }
 
@@ -148,29 +76,16 @@ public class LogementResourceIT {
     public void createLogement() throws Exception {
         int databaseSizeBeforeCreate = logementRepository.findAll().size();
         // Create the Logement
-        LogementDTO logementDTO = logementMapper.toDto(logement);
         restLogementMockMvc.perform(post("/api/logements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(logementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(logement)))
             .andExpect(status().isCreated());
 
         // Validate the Logement in the database
         List<Logement> logementList = logementRepository.findAll();
         assertThat(logementList).hasSize(databaseSizeBeforeCreate + 1);
         Logement testLogement = logementList.get(logementList.size() - 1);
-        assertThat(testLogement.getTypeDePiece()).isEqualTo(DEFAULT_TYPE_DE_PIECE);
-        assertThat(testLogement.getNbreChambe()).isEqualTo(DEFAULT_NBRE_CHAMBE);
-        assertThat(testLogement.getSufarce()).isEqualTo(DEFAULT_SUFARCE);
-        assertThat(testLogement.getPhoto()).isEqualTo(DEFAULT_PHOTO);
-        assertThat(testLogement.getPhotoContentType()).isEqualTo(DEFAULT_PHOTO_CONTENT_TYPE);
-        assertThat(testLogement.getLoyer()).isEqualTo(DEFAULT_LOYER);
-        assertThat(testLogement.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testLogement.getEtage()).isEqualTo(DEFAULT_ETAGE);
-        assertThat(testLogement.isAscenceur()).isEqualTo(DEFAULT_ASCENCEUR);
-        assertThat(testLogement.isGarage()).isEqualTo(DEFAULT_GARAGE);
-        assertThat(testLogement.isPiscine()).isEqualTo(DEFAULT_PISCINE);
-        assertThat(testLogement.isGrenier()).isEqualTo(DEFAULT_GRENIER);
-        assertThat(testLogement.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testLogement.isEtat()).isEqualTo(DEFAULT_ETAT);
     }
 
     @Test
@@ -180,12 +95,11 @@ public class LogementResourceIT {
 
         // Create the Logement with an existing ID
         logement.setId(1L);
-        LogementDTO logementDTO = logementMapper.toDto(logement);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restLogementMockMvc.perform(post("/api/logements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(logementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(logement)))
             .andExpect(status().isBadRequest());
 
         // Validate the Logement in the database
@@ -193,86 +107,6 @@ public class LogementResourceIT {
         assertThat(logementList).hasSize(databaseSizeBeforeCreate);
     }
 
-
-    @Test
-    @Transactional
-    public void checkTypeDePieceIsRequired() throws Exception {
-        int databaseSizeBeforeTest = logementRepository.findAll().size();
-        // set the field null
-        logement.setTypeDePiece(null);
-
-        // Create the Logement, which fails.
-        LogementDTO logementDTO = logementMapper.toDto(logement);
-
-
-        restLogementMockMvc.perform(post("/api/logements")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(logementDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Logement> logementList = logementRepository.findAll();
-        assertThat(logementList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkNbreChambeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = logementRepository.findAll().size();
-        // set the field null
-        logement.setNbreChambe(null);
-
-        // Create the Logement, which fails.
-        LogementDTO logementDTO = logementMapper.toDto(logement);
-
-
-        restLogementMockMvc.perform(post("/api/logements")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(logementDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Logement> logementList = logementRepository.findAll();
-        assertThat(logementList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkLoyerIsRequired() throws Exception {
-        int databaseSizeBeforeTest = logementRepository.findAll().size();
-        // set the field null
-        logement.setLoyer(null);
-
-        // Create the Logement, which fails.
-        LogementDTO logementDTO = logementMapper.toDto(logement);
-
-
-        restLogementMockMvc.perform(post("/api/logements")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(logementDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Logement> logementList = logementRepository.findAll();
-        assertThat(logementList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkDescriptionIsRequired() throws Exception {
-        int databaseSizeBeforeTest = logementRepository.findAll().size();
-        // set the field null
-        logement.setDescription(null);
-
-        // Create the Logement, which fails.
-        LogementDTO logementDTO = logementMapper.toDto(logement);
-
-
-        restLogementMockMvc.perform(post("/api/logements")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(logementDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Logement> logementList = logementRepository.findAll();
-        assertThat(logementList).hasSize(databaseSizeBeforeTest);
-    }
 
     @Test
     @Transactional
@@ -285,19 +119,7 @@ public class LogementResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(logement.getId().intValue())))
-            .andExpect(jsonPath("$.[*].typeDePiece").value(hasItem(DEFAULT_TYPE_DE_PIECE.toString())))
-            .andExpect(jsonPath("$.[*].nbreChambe").value(hasItem(DEFAULT_NBRE_CHAMBE)))
-            .andExpect(jsonPath("$.[*].sufarce").value(hasItem(DEFAULT_SUFARCE.doubleValue())))
-            .andExpect(jsonPath("$.[*].photoContentType").value(hasItem(DEFAULT_PHOTO_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].photo").value(hasItem(Base64Utils.encodeToString(DEFAULT_PHOTO))))
-            .andExpect(jsonPath("$.[*].loyer").value(hasItem(DEFAULT_LOYER)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].etage").value(hasItem(DEFAULT_ETAGE)))
-            .andExpect(jsonPath("$.[*].ascenceur").value(hasItem(DEFAULT_ASCENCEUR.booleanValue())))
-            .andExpect(jsonPath("$.[*].garage").value(hasItem(DEFAULT_GARAGE.booleanValue())))
-            .andExpect(jsonPath("$.[*].piscine").value(hasItem(DEFAULT_PISCINE.booleanValue())))
-            .andExpect(jsonPath("$.[*].grenier").value(hasItem(DEFAULT_GRENIER.booleanValue())))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())));
+            .andExpect(jsonPath("$.[*].etat").value(hasItem(DEFAULT_ETAT.booleanValue())));
     }
     
     @Test
@@ -311,19 +133,7 @@ public class LogementResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(logement.getId().intValue()))
-            .andExpect(jsonPath("$.typeDePiece").value(DEFAULT_TYPE_DE_PIECE.toString()))
-            .andExpect(jsonPath("$.nbreChambe").value(DEFAULT_NBRE_CHAMBE))
-            .andExpect(jsonPath("$.sufarce").value(DEFAULT_SUFARCE.doubleValue()))
-            .andExpect(jsonPath("$.photoContentType").value(DEFAULT_PHOTO_CONTENT_TYPE))
-            .andExpect(jsonPath("$.photo").value(Base64Utils.encodeToString(DEFAULT_PHOTO)))
-            .andExpect(jsonPath("$.loyer").value(DEFAULT_LOYER))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.etage").value(DEFAULT_ETAGE))
-            .andExpect(jsonPath("$.ascenceur").value(DEFAULT_ASCENCEUR.booleanValue()))
-            .andExpect(jsonPath("$.garage").value(DEFAULT_GARAGE.booleanValue()))
-            .andExpect(jsonPath("$.piscine").value(DEFAULT_PISCINE.booleanValue()))
-            .andExpect(jsonPath("$.grenier").value(DEFAULT_GRENIER.booleanValue()))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()));
+            .andExpect(jsonPath("$.etat").value(DEFAULT_ETAT.booleanValue()));
     }
     @Test
     @Transactional
@@ -346,43 +156,18 @@ public class LogementResourceIT {
         // Disconnect from session so that the updates on updatedLogement are not directly saved in db
         em.detach(updatedLogement);
         updatedLogement
-            .typeDePiece(UPDATED_TYPE_DE_PIECE)
-            .nbreChambe(UPDATED_NBRE_CHAMBE)
-            .sufarce(UPDATED_SUFARCE)
-            .photo(UPDATED_PHOTO)
-            .photoContentType(UPDATED_PHOTO_CONTENT_TYPE)
-            .loyer(UPDATED_LOYER)
-            .description(UPDATED_DESCRIPTION)
-            .etage(UPDATED_ETAGE)
-            .ascenceur(UPDATED_ASCENCEUR)
-            .garage(UPDATED_GARAGE)
-            .piscine(UPDATED_PISCINE)
-            .grenier(UPDATED_GRENIER)
-            .createdAt(UPDATED_CREATED_AT);
-        LogementDTO logementDTO = logementMapper.toDto(updatedLogement);
+            .etat(UPDATED_ETAT);
 
         restLogementMockMvc.perform(put("/api/logements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(logementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedLogement)))
             .andExpect(status().isOk());
 
         // Validate the Logement in the database
         List<Logement> logementList = logementRepository.findAll();
         assertThat(logementList).hasSize(databaseSizeBeforeUpdate);
         Logement testLogement = logementList.get(logementList.size() - 1);
-        assertThat(testLogement.getTypeDePiece()).isEqualTo(UPDATED_TYPE_DE_PIECE);
-        assertThat(testLogement.getNbreChambe()).isEqualTo(UPDATED_NBRE_CHAMBE);
-        assertThat(testLogement.getSufarce()).isEqualTo(UPDATED_SUFARCE);
-        assertThat(testLogement.getPhoto()).isEqualTo(UPDATED_PHOTO);
-        assertThat(testLogement.getPhotoContentType()).isEqualTo(UPDATED_PHOTO_CONTENT_TYPE);
-        assertThat(testLogement.getLoyer()).isEqualTo(UPDATED_LOYER);
-        assertThat(testLogement.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testLogement.getEtage()).isEqualTo(UPDATED_ETAGE);
-        assertThat(testLogement.isAscenceur()).isEqualTo(UPDATED_ASCENCEUR);
-        assertThat(testLogement.isGarage()).isEqualTo(UPDATED_GARAGE);
-        assertThat(testLogement.isPiscine()).isEqualTo(UPDATED_PISCINE);
-        assertThat(testLogement.isGrenier()).isEqualTo(UPDATED_GRENIER);
-        assertThat(testLogement.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testLogement.isEtat()).isEqualTo(UPDATED_ETAT);
     }
 
     @Test
@@ -390,13 +175,10 @@ public class LogementResourceIT {
     public void updateNonExistingLogement() throws Exception {
         int databaseSizeBeforeUpdate = logementRepository.findAll().size();
 
-        // Create the Logement
-        LogementDTO logementDTO = logementMapper.toDto(logement);
-
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restLogementMockMvc.perform(put("/api/logements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(logementDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(logement)))
             .andExpect(status().isBadRequest());
 
         // Validate the Logement in the database

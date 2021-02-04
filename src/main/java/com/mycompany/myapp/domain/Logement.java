@@ -1,16 +1,11 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-
-import com.mycompany.myapp.domain.enumeration.Piece;
 
 /**
  * A Logement.
@@ -26,54 +21,8 @@ public class Logement implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type_de_piece", nullable = false)
-    private Piece typeDePiece;
-
-    @NotNull
-    @Column(name = "nbre_chambe", nullable = false)
-    private Integer nbreChambe;
-
-    @Column(name = "sufarce")
-    private Float sufarce;
-
-    @Lob
-    @Column(name = "photo")
-    private byte[] photo;
-
-    @Column(name = "photo_content_type")
-    private String photoContentType;
-
-    @NotNull
-    @Column(name = "loyer", nullable = false)
-    private Integer loyer;
-
-    @NotNull
-    @Column(name = "description", nullable = false)
-    private String description;
-
-    @Column(name = "etage")
-    private Integer etage;
-
-    @Column(name = "ascenceur")
-    private Boolean ascenceur;
-
-    @Column(name = "garage")
-    private Boolean garage;
-
-    @Column(name = "piscine")
-    private Boolean piscine;
-
-    @Column(name = "grenier")
-    private Boolean grenier;
-
-    @Column(name = "created_at")
-    private LocalDate createdAt;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "logements", allowSetters = true)
-    private Adresse adresse;
+    @Column(name = "etat")
+    private Boolean etat;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -84,186 +33,17 @@ public class Logement implements Serializable {
         this.id = id;
     }
 
-    public Piece getTypeDePiece() {
-        return typeDePiece;
+    public Boolean isEtat() {
+        return etat;
     }
 
-    public Logement typeDePiece(Piece typeDePiece) {
-        this.typeDePiece = typeDePiece;
+    public Logement etat(Boolean etat) {
+        this.etat = etat;
         return this;
     }
 
-    public void setTypeDePiece(Piece typeDePiece) {
-        this.typeDePiece = typeDePiece;
-    }
-
-    public Integer getNbreChambe() {
-        return nbreChambe;
-    }
-
-    public Logement nbreChambe(Integer nbreChambe) {
-        this.nbreChambe = nbreChambe;
-        return this;
-    }
-
-    public void setNbreChambe(Integer nbreChambe) {
-        this.nbreChambe = nbreChambe;
-    }
-
-    public Float getSufarce() {
-        return sufarce;
-    }
-
-    public Logement sufarce(Float sufarce) {
-        this.sufarce = sufarce;
-        return this;
-    }
-
-    public void setSufarce(Float sufarce) {
-        this.sufarce = sufarce;
-    }
-
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public Logement photo(byte[] photo) {
-        this.photo = photo;
-        return this;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
-
-    public String getPhotoContentType() {
-        return photoContentType;
-    }
-
-    public Logement photoContentType(String photoContentType) {
-        this.photoContentType = photoContentType;
-        return this;
-    }
-
-    public void setPhotoContentType(String photoContentType) {
-        this.photoContentType = photoContentType;
-    }
-
-    public Integer getLoyer() {
-        return loyer;
-    }
-
-    public Logement loyer(Integer loyer) {
-        this.loyer = loyer;
-        return this;
-    }
-
-    public void setLoyer(Integer loyer) {
-        this.loyer = loyer;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Logement description(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getEtage() {
-        return etage;
-    }
-
-    public Logement etage(Integer etage) {
-        this.etage = etage;
-        return this;
-    }
-
-    public void setEtage(Integer etage) {
-        this.etage = etage;
-    }
-
-    public Boolean isAscenceur() {
-        return ascenceur;
-    }
-
-    public Logement ascenceur(Boolean ascenceur) {
-        this.ascenceur = ascenceur;
-        return this;
-    }
-
-    public void setAscenceur(Boolean ascenceur) {
-        this.ascenceur = ascenceur;
-    }
-
-    public Boolean isGarage() {
-        return garage;
-    }
-
-    public Logement garage(Boolean garage) {
-        this.garage = garage;
-        return this;
-    }
-
-    public void setGarage(Boolean garage) {
-        this.garage = garage;
-    }
-
-    public Boolean isPiscine() {
-        return piscine;
-    }
-
-    public Logement piscine(Boolean piscine) {
-        this.piscine = piscine;
-        return this;
-    }
-
-    public void setPiscine(Boolean piscine) {
-        this.piscine = piscine;
-    }
-
-    public Boolean isGrenier() {
-        return grenier;
-    }
-
-    public Logement grenier(Boolean grenier) {
-        this.grenier = grenier;
-        return this;
-    }
-
-    public void setGrenier(Boolean grenier) {
-        this.grenier = grenier;
-    }
-
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
-
-    public Logement createdAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public Logement adresse(Adresse adresse) {
-        this.adresse = adresse;
-        return this;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
+    public void setEtat(Boolean etat) {
+        this.etat = etat;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -288,19 +68,7 @@ public class Logement implements Serializable {
     public String toString() {
         return "Logement{" +
             "id=" + getId() +
-            ", typeDePiece='" + getTypeDePiece() + "'" +
-            ", nbreChambe=" + getNbreChambe() +
-            ", sufarce=" + getSufarce() +
-            ", photo='" + getPhoto() + "'" +
-            ", photoContentType='" + getPhotoContentType() + "'" +
-            ", loyer=" + getLoyer() +
-            ", description='" + getDescription() + "'" +
-            ", etage=" + getEtage() +
-            ", ascenceur='" + isAscenceur() + "'" +
-            ", garage='" + isGarage() + "'" +
-            ", piscine='" + isPiscine() + "'" +
-            ", grenier='" + isGrenier() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
+            ", etat='" + isEtat() + "'" +
             "}";
     }
 }

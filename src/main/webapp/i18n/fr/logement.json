@@ -1,0 +1,32 @@
+{
+  "loyerApp": {
+    "logement": {
+      "home": {
+        "title": "Logements",
+        "createLabel": "Créer un nouveau Logement",
+        "createOrEditLabel": "Créer ou éditer un Logement",
+        "notFound": "Aucun Logement trouvé"
+      },
+      "created": "Un nouveau Logement a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Logement avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Logement avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Logement {{ id }} ?"
+      },
+      "detail": {
+        "title": "Logement"
+      },
+      "nbreChambe": "Nbre Chambe",
+      "sufarce": "Sufarce",
+      "photo": "Photo",
+      "loyer": "Loyer",
+      "description": "Description",
+      "etage": "Etage",
+      "ascenceur": "Ascenceur",
+      "garage": "Garage",
+      "piscine": "Piscine",
+      "grenier": "Grenier",
+      "adresse": "Adresse"
+    }
+  }
+}

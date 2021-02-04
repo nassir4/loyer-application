@@ -1,0 +1,68 @@
+entity Adresse {
+	region String required,
+    departement String required,
+    commune String required,
+}
+
+entity Logement {
+	typeDePiece Piece required
+	nbreChambe Integer required,
+    sufarce Float,
+    photo ImageBlob,
+    loyer Integer required,
+    description String required,
+    etage Integer,
+  	ascenceur Boolean
+    garage Boolean
+    piscine Boolean
+    grenier Boolean
+    createdAt LocalDate
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Paiement {
+	loyer Integer required,
+    dateDebut LocalDate required,
+    duree Integer required
+    typePaiement Type
+}
+
+entity User{
+	telephone String
+}
+
+/**
+ * The Employee entity.
+ */
+
+enum Type{
+	Orange_money, Free_money, Wave
+}
+enum Piece {
+    Maison, Appartement, Chambre
+}
+
+
+
+relationship ManyToOne {
+	Logement{adresse} to Adresse
+}
+relationship ManyToOne{
+	Paiement{user} to User  
+}
+relationship ManyToOne{
+	Paiement{logement} to Logement
+}
+
+// Set pagination options
+paginate Logement, Paiement, Adresse with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+dto * with mapstruct
+// Set service options to all except few
+service all with serviceImpl 
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

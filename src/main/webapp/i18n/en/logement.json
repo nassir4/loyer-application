@@ -16,19 +16,7 @@
       "detail": {
         "title": "Logement"
       },
-      "typeDePiece": "Type De Piece",
-      "nbreChambe": "Nbre Chambe",
-      "sufarce": "Sufarce",
-      "photo": "Photo",
-      "loyer": "Loyer",
-      "description": "Description",
-      "etage": "Etage",
-      "ascenceur": "Ascenceur",
-      "garage": "Garage",
-      "piscine": "Piscine",
-      "grenier": "Grenier",
-      "createdAt": "Created At",
-      "adresse": "Adresse"
+      "etat": "Etat"
     }
   }
 }

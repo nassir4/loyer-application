@@ -1,0 +1,4 @@
+
+entity Logement{
+	etat Boolean
+}

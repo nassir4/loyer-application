@@ -2,74 +2,16 @@
   "name": "Logement",
   "fields": [
     {
-      "fieldName": "typeDePiece",
-      "fieldType": "Piece",
-      "fieldValues": "Maison,Appartement,Chambre",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "nbreChambe",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "sufarce",
-      "fieldType": "Float"
-    },
-    {
-      "fieldName": "photo",
-      "fieldType": "byte[]",
-      "fieldTypeBlobContent": "image"
-    },
-    {
-      "fieldName": "loyer",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "description",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "etage",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "ascenceur",
+      "fieldName": "etat",
       "fieldType": "Boolean"
-    },
-    {
-      "fieldName": "garage",
-      "fieldType": "Boolean"
-    },
-    {
-      "fieldName": "piscine",
-      "fieldType": "Boolean"
-    },
-    {
-      "fieldName": "grenier",
-      "fieldType": "Boolean"
-    },
-    {
-      "fieldName": "createdAt",
-      "fieldType": "LocalDate"
     }
   ],
-  "relationships": [
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "adresse",
-      "otherEntityRelationshipName": "logement",
-      "relationshipName": "adresse",
-      "otherEntityField": "id"
-    }
-  ],
+  "relationships": [],
   "changelogDate": "20210204161530",
   "entityTableName": "logement",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,

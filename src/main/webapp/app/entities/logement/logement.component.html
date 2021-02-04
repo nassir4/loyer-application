@@ -21,49 +21,16 @@
     <div class="table-responsive" id="entities" *ngIf="logements && logements.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="typeDePiece"><span jhiTranslate="loyerApp.logement.typeDePiece">Type De Piece</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="nbreChambe"><span jhiTranslate="loyerApp.logement.nbreChambe">Nbre Chambe</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="sufarce"><span jhiTranslate="loyerApp.logement.sufarce">Sufarce</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="photo"><span jhiTranslate="loyerApp.logement.photo">Photo</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="loyer"><span jhiTranslate="loyerApp.logement.loyer">Loyer</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="description"><span jhiTranslate="loyerApp.logement.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="etage"><span jhiTranslate="loyerApp.logement.etage">Etage</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="ascenceur"><span jhiTranslate="loyerApp.logement.ascenceur">Ascenceur</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="garage"><span jhiTranslate="loyerApp.logement.garage">Garage</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="piscine"><span jhiTranslate="loyerApp.logement.piscine">Piscine</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="grenier"><span jhiTranslate="loyerApp.logement.grenier">Grenier</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="createdAt"><span jhiTranslate="loyerApp.logement.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="adresseId"><span jhiTranslate="loyerApp.logement.adresse">Adresse</span> <fa-icon icon="sort"></fa-icon></th>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="loyerApp.logement.etat">Etat</span></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let logement of logements ;trackBy: trackId">
                     <td><a [routerLink]="['/logement', logement.id, 'view']">{{ logement.id }}</a></td>
-                    <td jhiTranslate="{{ 'loyerApp.Piece.' + logement.typeDePiece }}">{{ logement.typeDePiece }}</td>
-                    <td>{{ logement.nbreChambe }}</td>
-                    <td>{{ logement.sufarce }}</td>
-                    <td>
-                        <a *ngIf="logement.photo" (click)="openFile(logement.photoContentType, logement.photo)">
-                            <img [src]="'data:' + logement.photoContentType + ';base64,' + logement.photo" style="max-height: 30px;" alt="logement image"/>
-                        </a>
-                        <span *ngIf="logement.photo">{{ logement.photoContentType }}, {{ byteSize(logement.photo) }}</span>
-                    </td>
-                    <td>{{ logement.loyer }}</td>
-                    <td>{{ logement.description }}</td>
-                    <td>{{ logement.etage }}</td>
-                    <td>{{ logement.ascenceur }}</td>
-                    <td>{{ logement.garage }}</td>
-                    <td>{{ logement.piscine }}</td>
-                    <td>{{ logement.grenier }}</td>
-                    <td>{{ logement.createdAt | date:'mediumDate' }}</td>
-                    <td>
-                        <div *ngIf="logement.adresseId">
-                            <a [routerLink]="['/adresse', logement.adresseId , 'view']" >{{ logement.adresseId }}</a>
-                        </div>
-                    </td>
+                    <td>{{ logement.etat }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
@@ -90,15 +57,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-
-    <div *ngIf="logements && logements.length > 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
-        </div>
     </div>
 </div>
